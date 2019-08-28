@@ -14,4 +14,6 @@ public interface VirusService {
     boolean removeVirusById(String id);
 
     VirusServiceModel findVirusById(String id);
+
+    VirusServiceModel editVirus(VirusServiceModel virusServiceModel);
 }

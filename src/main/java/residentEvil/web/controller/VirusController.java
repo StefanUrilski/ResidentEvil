@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import residentEvil.domain.model.binding.VirusAddBindingModel;
+import residentEvil.domain.model.binding.VirusEditBindingModel;
 import residentEvil.domain.model.service.VirusServiceModel;
 import residentEvil.domain.model.view.CapitalViewModel;
 import residentEvil.service.CapitalService;
@@ -37,6 +38,10 @@ public class VirusController extends BaseController {
         return capitalService.findAllCapital().stream()
                 .map(capital -> modelMapper.map(capital, CapitalViewModel.class))
                 .collect(Collectors.toList());
+    }
+
+    private VirusServiceModel getVirusById(String id) {
+        return virusService.findVirusById(id);
     }
 
     @GetMapping("/add")
@@ -71,23 +76,40 @@ public class VirusController extends BaseController {
     public ModelAndView show(ModelAndView modelAndView) {
         modelAndView.addObject("allViruses", virusService.findAllViruses());
 
-//        modelAndView.setViewName("show-viruses");
-//        return modelAndView;
         return view("show-viruses", modelAndView);
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") String id,
                              ModelAndView modelAndView,
-                             @ModelAttribute(name = "bindingModel") VirusAddBindingModel bindingModel) {
+                             @ModelAttribute(name = "bindingModel") VirusEditBindingModel bindingModel) {
         modelAndView.addObject("bindingModel", bindingModel);
 
         modelAndView.addObject("capitals", getAllCapitals());
-        VirusServiceModel virus = virusService.findVirusById(id);
 
-        modelAndView.addObject("virus", virus);
+        modelAndView.addObject("virus", getVirusById(id));
 
         return view("edit-viruses", modelAndView);
+    }
+
+    @PostMapping("/edit/{id}")
+    public ModelAndView editConfirm(@PathVariable("id") String id,
+                                    ModelAndView modelAndView,
+                                   @Valid @ModelAttribute(name = "bindingModel") VirusEditBindingModel bindingModel,
+                                   BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("bindingModel", bindingModel);
+            modelAndView.addObject("capitals", getAllCapitals());
+            modelAndView.addObject("virus", getVirusById(id));
+
+            return view("edit-viruses", modelAndView);
+        }
+
+        bindingModel.setId(id);
+        virusService.editVirus(modelMapper.map(bindingModel, VirusServiceModel.class));
+
+        return redirect("/");
     }
 
     @GetMapping("/delete/{id}")
