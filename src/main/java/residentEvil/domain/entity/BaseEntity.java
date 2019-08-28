@@ -5,11 +5,12 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-abstract class BaseEntity {
+@MappedSuperclass
+public abstract class BaseEntity {
 
     private String id;
-
 
     @Id
     @GeneratedValue(generator = "uuid-string")

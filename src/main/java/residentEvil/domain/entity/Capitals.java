@@ -2,15 +2,27 @@ package residentEvil.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "capitals")
-public class Capitals extends BaseEntity {
+public class Capitals {
 
+    private Integer id;
     private String name;
     private Double longitude;
     private Double latitude;
+
+    @Id
+    @Column(name = "id", updatable = false, nullable = false, unique = true)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     @Column(nullable = false)
     public String getName() {
