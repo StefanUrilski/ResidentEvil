@@ -1,20 +1,15 @@
-package residentEvil.domain.entity;
+package residentEvil.domain.model.service;
 
 import residentEvil.domain.entity.enums.Creator;
 import residentEvil.domain.entity.enums.Magnitude;
 import residentEvil.domain.entity.enums.Mutation;
 
-import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Table(name = "viruses")
-public class Virus extends BaseEntity {
+public class VirusServiceModel {
 
+    private String id;
     private String name;
     private String description;
     private String sideEffects;
@@ -26,10 +21,16 @@ public class Virus extends BaseEntity {
     private Integer hoursUntilTurn;
     private Magnitude magnitude;
     private LocalDate releasedOn;
-    private List<Capital> capitals;
+    private List<String> capitals;
 
-    @Size(min = 3, max = 10)
-    @Column(nullable = false)
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -38,8 +39,6 @@ public class Virus extends BaseEntity {
         this.name = name;
     }
 
-    @Size(min = 5, max = 100)
-    @Column(nullable = false, columnDefinition = "text")
     public String getDescription() {
         return description;
     }
@@ -48,8 +47,6 @@ public class Virus extends BaseEntity {
         this.description = description;
     }
 
-    @Size(max = 50)
-    @Column(name = "side_effects")
     public String getSideEffects() {
         return sideEffects;
     }
@@ -58,8 +55,6 @@ public class Virus extends BaseEntity {
         this.sideEffects = sideEffects;
     }
 
-    @Column
-    @Enumerated(EnumType.STRING)
     public Creator getCreator() {
         return creator;
     }
@@ -68,26 +63,22 @@ public class Virus extends BaseEntity {
         this.creator = creator;
     }
 
-    @Column(name = "is_deadly")
-    public boolean getDeadly() {
+    public boolean isDeadly() {
         return isDeadly;
     }
 
-    public void setDeadly(boolean isDeadly) {
-        this.isDeadly = isDeadly;
+    public void setDeadly(boolean deadly) {
+        isDeadly = deadly;
     }
 
-    @Column(name = "is_curable")
-    public boolean getCurable() {
+    public boolean isCurable() {
         return isCurable;
     }
 
-    public void setCurable(boolean isCurable) {
-        this.isCurable = isCurable;
+    public void setCurable(boolean curable) {
+        isCurable = curable;
     }
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     public Mutation getMutation() {
         return mutation;
     }
@@ -96,9 +87,6 @@ public class Virus extends BaseEntity {
         this.mutation = mutation;
     }
 
-    @Min(0)
-    @Max(100)
-    @Column(name = "turnover_rate")
     public Integer getTurnoverRate() {
         return turnoverRate;
     }
@@ -107,9 +95,6 @@ public class Virus extends BaseEntity {
         this.turnoverRate = turnoverRate;
     }
 
-    @Min(1)
-    @Max(12)
-    @Column(name = "hours_until_turn")
     public Integer getHoursUntilTurn() {
         return hoursUntilTurn;
     }
@@ -118,8 +103,6 @@ public class Virus extends BaseEntity {
         this.hoursUntilTurn = hoursUntilTurn;
     }
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     public Magnitude getMagnitude() {
         return magnitude;
     }
@@ -128,7 +111,6 @@ public class Virus extends BaseEntity {
         this.magnitude = magnitude;
     }
 
-    @Column(name = "released_on")
     public LocalDate getReleasedOn() {
         return releasedOn;
     }
@@ -137,16 +119,11 @@ public class Virus extends BaseEntity {
         this.releasedOn = releasedOn;
     }
 
-    @ManyToMany
-    @JoinTable(name = "viruses_capitals",
-            joinColumns = @JoinColumn(name = "virus_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "capital_id", referencedColumnName = "id")
-    )
-    public List<Capital> getCapitals() {
+    public List<String> getCapitals() {
         return capitals;
     }
 
-    public void setCapitals(List<Capital> capitals) {
+    public void setCapitals(List<String> capitals) {
         this.capitals = capitals;
     }
 }

@@ -1,4 +1,5 @@
 <th:block th:fragment>
+    <header>
     <nav class="navbar navbar-expand-lg re-background">
         <a class="navbar-brand text-white" th:href="@{/}">Resident Evil</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -9,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link text-white" th:href="@{/home}">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
@@ -26,4 +27,5 @@
     </nav>
     </div>
     </nav>
+    </header>
 </th:block>
