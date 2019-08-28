@@ -17,7 +17,7 @@
                     <label for="inputVirusName">Name</label>
                     <input type="text" class="form-control" id="inputVirusName" placeholder="Enter name"
                            th:field="*{name}"/>
-                    <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.name}"></small>
+                    <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.name}"></small>
                     <small th:each="error : ${#fields.errors('name')}" th:text="${error}"></small>
                 </div>
                 <!--               DESCRIPTION             -->
@@ -25,7 +25,7 @@
                     <label for="inputDescription">Description</label>
                     <textarea class="form-control" id="inputDescription" rows="3"
                               placeholder="Enter description ..." th:field="*{description}"></textarea>
-                    <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.description}"></small>
+                    <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.description}"></small>
                     <small th:each="error : ${#fields.errors('description')}" th:text="${error}"></small>
                 </div>
                 <!--              SIDE EFFECTS             -->
@@ -33,7 +33,7 @@
                     <label for="inputSideEffects">Side Effects</label>
                     <input type="text" class="form-control" id="inputSideEffects" placeholder="Enter Side Effects"
                            th:field="*{sideEffects}">
-                    <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.sideEffects}"></small>
+                    <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.sideEffects}"></small>
                     <small th:each="error : ${#fields.errors('sideEffects')}" th:text="${error}"></small>
                 </div>
                 <!--                 CREATOR               -->
@@ -45,7 +45,7 @@
                                 th:text="${creator}">
                         </option>
                     </select>
-                    <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.creator}"></small>
+                    <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.creator}"></small>
                     <small th:each="error : ${#fields.errors('creator')}" th:text="${error}"></small>
                 </div>
                 <br/>
@@ -55,7 +55,7 @@
                     <label class="form-check-label" for="inputVirusDeadly">
                         Is Deadly?
                     </label>
-                    <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.deadly}"></small>
+                    <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.deadly}"></small>
                 </div>
                 <!--                 IS CURABLE              -->
                 <div class="form-check mb-2">
@@ -63,7 +63,7 @@
                     <label class="form-check-label" for="inputVirusCurable">
                         Is Curable?
                     </label>
-                    <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.curable}"></small>
+                    <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.curable}"></small>
                 </div>
                 <br/>
                 <!--                  MUTATION               -->
@@ -96,7 +96,7 @@
                             Save Humanity
                         </label>
                     </div>
-                    <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.mutation}"></small>
+                    <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.mutation}"></small>
                     <small th:each="error : ${#fields.errors('mutation')}" th:text="${error}"></small>
                 </div>
                 <br/>
@@ -106,14 +106,14 @@
                         <label for="inputVirusTurnoverRate">Turnover Rate</label>
                         <input type="number" value="0" min="0" max="100" id="inputVirusTurnoverRate"
                                class="form-control" placeholder="Enter Turnover Rate" th:field="*{turnoverRate}">
-                        <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.turnoverRate}"></small>
+                        <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.turnoverRate}"></small>
                         <small th:each="error : ${#fields.errors('turnoverRate')}" th:text="${error}"></small>
                     </div>
                     <div class="form-group col" th:classappend="${#fields.hasErrors('hoursUntilTurn')}? 'text-danger'">
                         <label for="inputVirusHoursUntilTurn">Hours Until Turn</label>
                         <input type="number" value="1" min="1" max="12" step="1" id="inputVirusHoursUntilTurn"
                                class="form-control" placeholder="Enter Hours Until Turn" th:field="*{hoursUntilTurn}">
-                        <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.hoursUntilTurn}"></small>
+                        <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.hoursUntilTurn}"></small>
                         <small th:each="error : ${#fields.errors('hoursUntilTurn')}" th:text="${error}"></small>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                                 th:text="${magnitude}">
                         </option>
                     </select>
-                    <small class="text-muted font-italic" th:text="'Previous value: ' + ${virus.magnitude}"></small>
+                    <small class="text-muted font-italic ml-2" th:text="'Previous value: ' + ${virus.magnitude}"></small>
                     <small th:each="error : ${#fields.errors('magnitude')}" th:text="${error}"></small>
                 </div>
                 <br/>
