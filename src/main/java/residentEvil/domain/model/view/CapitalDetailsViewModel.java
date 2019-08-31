@@ -1,6 +1,6 @@
-package residentEvil.domain.model.service;
+package residentEvil.domain.model.view;
 
-public class CapitalServiceModel {
+public class CapitalDetailsViewModel {
 
     private String id;
     private String name;

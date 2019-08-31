@@ -7,34 +7,98 @@
 <th:block th:include="fragments/navbar"/>
 <main>
     <div class="container mt-4">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Magnitude</th>
-                <th scope="col">Released On</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <th:block th:each="virus : ${allViruses}">
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("input[name$='showHide']").click(function () {
+                    let radio_value = $(this).val();
+                    if (radio_value === '0') {
+                        $("#choice").hide();
+                        $("#virusTable").show();
+                        $("#allCapitals").hide();
+                    } else if (radio_value === '1') {
+                        $("#choice").hide();
+                        $("#virusTable").hide();
+                        $("#allCapitals").show();
+                    }
+                });
+                $('[name="showHide"]:checked').trigger('click');
+            });
+        </script>
+
+        <div class="row container mb-5">
+            <div class="col-6">
+                <h2>Your Choice</h2>
+            </div>
+
+            <div class="custom-control custom-radio mt-3 col">
+                <input type="radio" class="custom-control-input" id="viruses" name="showHide" value="0">
+                <label class="custom-control-label font-weight-bolder" for="viruses">Viruses</label>
+            </div>
+
+            <div class="custom-control custom-radio mt-3 col">
+                <input type="radio" class="custom-control-input" id="capitals" name="showHide" value="1">
+                <label class="custom-control-label font-weight-bolder" for="capitals">Capitals</label>
+            </div>
+        </div>
+
+        <div id="choice" style="display: block">
+            <hr/>
+            <h1 class="container d-flex justify-content-center pt-2">Select, what data you want to visualize!</h1>
+        </div>
+
+        <div id="virusTable" style="display: none">
+            <table class="table table-hover">
+                <thead>
                 <tr>
-                    <th scope="row" th:text="${virus.id}"></th>
-                    <td th:text="${virus.name}"></td>
-                    <td th:text="${virus.magnitude}"></td>
-                    <td th:text="${virus.releasedOn}"></td>
-                    <td>
-                        <a th:href="@{/viruses/edit/{id}(id=${virus.id})}" class="btn border-dark">Edit</a>
-                    </td>
-                    <td>
-                        <a th:href="@{/viruses/delete/{id}(id=${virus.id})}" class="btn border-dark">Delete</a>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Magnitude</th>
+                    <th scope="col">Released On</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
-            </th:block>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <th:block th:each="virus : ${allViruses}">
+                    <tr>
+                        <th scope="row" th:text="${virus.id}"></th>
+                        <td th:text="${virus.name}"></td>
+                        <td th:text="${virus.magnitude}"></td>
+                        <td th:text="${virus.releasedOn}"></td>
+                        <td>
+                            <a th:href="@{/viruses/edit/{id}(id=${virus.id})}" class="btn border-dark">Edit</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/viruses/delete/{id}(id=${virus.id})}" class="btn border-dark">Delete</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="allCapitals" style="display: none">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Latitude</th>
+                    <th scope="col">Longitude</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="capital, iter : ${capitalsWithDetails}">
+                    <tr>
+                        <th scope="row" th:text="${iter.index} + 1"></th>
+                        <td th:text="${capital.name}"></td>
+                        <td th:text="${capital.latitude}"></td>
+                        <td th:text="${capital.longitude}"></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
 </body>

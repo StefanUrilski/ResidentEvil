@@ -9,7 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 import residentEvil.domain.model.binding.VirusAddBindingModel;
 import residentEvil.domain.model.binding.VirusEditBindingModel;
 import residentEvil.domain.model.service.VirusServiceModel;
+import residentEvil.domain.model.view.CapitalDetailsViewModel;
 import residentEvil.domain.model.view.CapitalViewModel;
+import residentEvil.domain.model.view.VirusViewModel;
 import residentEvil.service.CapitalService;
 import residentEvil.service.VirusService;
 
@@ -40,8 +42,20 @@ public class VirusController extends BaseController {
                 .collect(Collectors.toList());
     }
 
+    private List<CapitalDetailsViewModel> getAllCapitalsWithDetails() {
+        return capitalService.findAllCapital().stream()
+                .map(capital -> modelMapper.map(capital, CapitalDetailsViewModel.class))
+                .collect(Collectors.toList());
+    }
+
     private VirusServiceModel getVirusById(String id) {
         return virusService.findVirusById(id);
+    }
+
+    private List<VirusViewModel> getAllViruses() {
+        return virusService.findAllViruses().stream()
+                .map(virus -> modelMapper.map(virus, VirusViewModel.class))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/add")
@@ -74,10 +88,14 @@ public class VirusController extends BaseController {
 
     @GetMapping("/show")
     public ModelAndView show(ModelAndView modelAndView) {
-        modelAndView.addObject("allViruses", virusService.findAllViruses());
+        modelAndView.addObject("allViruses", getAllViruses());
+
+        modelAndView.addObject("capitalsWithDetails", getAllCapitalsWithDetails());
 
         return view("show-viruses", modelAndView);
     }
+
+
 
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") String id,

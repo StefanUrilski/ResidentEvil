@@ -9,8 +9,8 @@ import residentEvil.domain.entity.Virus;
 
 public interface VirusRepository extends JpaRepository<Virus, String> {
 
-    @Transactional
     @Modifying
+    @Transactional
     @Query(value = "delete from resident_evil.viruses_capitals " +
             "where virus_id = :virusId and capital_id = :capitalId", nativeQuery = true)
     void removeByCapitalsId(@Param("virusId")String virusId,@Param("capitalId") String capitalId);
