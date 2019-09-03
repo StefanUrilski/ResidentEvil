@@ -6,8 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import residentEvil.domain.model.binding.VirusAddBindingModel;
-import residentEvil.domain.model.binding.VirusEditBindingModel;
+import residentEvil.domain.model.binding.VirusBindingModel;
 import residentEvil.domain.model.service.VirusServiceModel;
 import residentEvil.domain.model.view.CapitalDetailsViewModel;
 import residentEvil.domain.model.view.CapitalViewModel;
@@ -58,29 +57,38 @@ public class VirusController extends BaseController {
                 .collect(Collectors.toList());
     }
 
+    private void addObjectsInModelAndViewForAdd(ModelAndView modelAndView) {
+        modelAndView.addObject("capitals", getAllCapitals());
+        // Stupid fix but it works for making generic form.
+        modelAndView.addObject("virus", new VirusServiceModel());
+    }
+    private void addObjectsInModelAndViewForEdit(@PathVariable("id") String id, ModelAndView modelAndView) {
+        modelAndView.addObject("capitals", getAllCapitals());
+        modelAndView.addObject("virus", getVirusById(id));
+    }
+    private void addObjectsInModelAndViewForShow(ModelAndView modelAndView) {
+        modelAndView.addObject("allViruses", getAllViruses());
+        modelAndView.addObject("capitalsWithDetails", getAllCapitalsWithDetails());
+    }
+
     @GetMapping("/add")
     public ModelAndView add(ModelAndView modelAndView,
-                            @ModelAttribute(name = "bindingModel") VirusAddBindingModel bindingModel) {
-        modelAndView.addObject("bindingModel", bindingModel);
-
-        modelAndView.addObject("capitals", getAllCapitals());
-
+                            @ModelAttribute(name = "bindingModel") VirusBindingModel bindingModel) {
+        addObjectsInModelAndViewForAdd(modelAndView);
 
         return view("add-viruses", modelAndView);
     }
 
     @PostMapping("/add")
     public ModelAndView addConfirm(ModelAndView modelAndView,
-                                   @Valid @ModelAttribute(name = "bindingModel") VirusAddBindingModel bindingModel,
+                                   @Valid @ModelAttribute(name = "bindingModel") VirusBindingModel bindingModel,
                                    BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("bindingModel", bindingModel);
-            modelAndView.addObject("capitals", getAllCapitals());
+            addObjectsInModelAndViewForAdd(modelAndView);
 
             return view("add-viruses", modelAndView);
         }
-
         virusService.saveVirus(modelMapper.map(bindingModel, VirusServiceModel.class));
 
         return redirect("/");
@@ -88,9 +96,7 @@ public class VirusController extends BaseController {
 
     @GetMapping("/show")
     public ModelAndView show(ModelAndView modelAndView) {
-        modelAndView.addObject("allViruses", getAllViruses());
-
-        modelAndView.addObject("capitalsWithDetails", getAllCapitalsWithDetails());
+        addObjectsInModelAndViewForShow(modelAndView);
 
         return view("show-viruses", modelAndView);
     }
@@ -100,12 +106,8 @@ public class VirusController extends BaseController {
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") String id,
                              ModelAndView modelAndView,
-                             @ModelAttribute(name = "bindingModel") VirusEditBindingModel bindingModel) {
-        modelAndView.addObject("bindingModel", bindingModel);
-
-        modelAndView.addObject("capitals", getAllCapitals());
-
-        modelAndView.addObject("virus", getVirusById(id));
+                             @ModelAttribute(name = "bindingModel") VirusBindingModel bindingModel) {
+        addObjectsInModelAndViewForEdit(id, modelAndView);
 
         return view("edit-viruses", modelAndView);
     }
@@ -113,13 +115,11 @@ public class VirusController extends BaseController {
     @PostMapping("/edit/{id}")
     public ModelAndView editConfirm(@PathVariable("id") String id,
                                     ModelAndView modelAndView,
-                                   @Valid @ModelAttribute(name = "bindingModel") VirusEditBindingModel bindingModel,
+                                   @Valid @ModelAttribute(name = "bindingModel") VirusBindingModel bindingModel,
                                    BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("bindingModel", bindingModel);
-            modelAndView.addObject("capitals", getAllCapitals());
-            modelAndView.addObject("virus", getVirusById(id));
+            addObjectsInModelAndViewForEdit(id, modelAndView);
 
             return view("edit-viruses", modelAndView);
         }

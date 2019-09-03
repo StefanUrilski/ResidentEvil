@@ -2,7 +2,6 @@ package residentEvil.domain.model.binding;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import residentEvil.custumValidaton.DateBeforeToday;
-import residentEvil.domain.entity.Capital;
 import residentEvil.domain.entity.enums.Creator;
 import residentEvil.domain.entity.enums.Magnitude;
 import residentEvil.domain.entity.enums.Mutation;
@@ -14,8 +13,9 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
-public class VirusAddBindingModel {
+public class VirusBindingModel {
 
+    private String id;
     private String name;
     private String description;
     private String sideEffects;
@@ -28,6 +28,14 @@ public class VirusAddBindingModel {
     private Magnitude magnitude;
     private LocalDate releasedOn;
     private List<String> capitals;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @NotNull(message = "Name can't be null!")
     @Size(min = 3, max = 10, message = "Name has to be between 3 and 10!")
