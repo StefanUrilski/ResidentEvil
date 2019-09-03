@@ -60,19 +60,25 @@
     </div>
     <br/>
     <!--                  MUTATION               -->
-    <div class="form-check">
+    <div class="container row">
         <th:block th:each="mutation, iter : ${mutations}">
-            <input class="form-check-input" type="radio" th:id="${mutation}" th:value="${mutation}"
-                   th:field="*{mutation}">
-            <label class="form-check-label" th:for="${mutation}" th:text="${mutation}"
-                   th:styleappend="${#fields.hasErrors('mutation')} ? 'color: red'">
-            </label>
-            <br/>
+            <div class="col">
+                <input class="form-check-input" type="radio" th:id="${mutation}" th:value="${mutation}"
+                       th:field="*{mutation}">
+                <label class="form-check-label" th:for="${mutation}" th:text="${mutation}"
+                       th:styleappend="${#fields.hasErrors('mutation')} ? 'color: red'">
+                </label>
+            </div>
         </th:block>
-        <input class="form-check-input" type="radio" value="Save Humanity" disabled>Save Humanity
+        <div class="col">
+            <input class="form-check-input" type="radio" value="Save Humanity" disabled>Save Humanity
+        </div>
         <br/>
-        <small style="color: red" th:each="error : ${#fields.errors('mutation')}" th:text="${error}"></small>
     </div>
+    <br/>
+    <small class="text-muted font-italic ml-2 edit-virus"
+           th:text="'Previous value: ' + ${virus.mutation}"></small>
+    <small style="color: red" th:each="error : ${#fields.errors('mutation')}" th:text="${error}"></small>
     <br/>
     <!--              TURNOVER RATE              -->
     <div class="row">
