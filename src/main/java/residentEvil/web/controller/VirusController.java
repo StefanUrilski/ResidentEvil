@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import residentEvil.domain.entity.enums.Mutation;
 import residentEvil.domain.model.binding.VirusBindingModel;
 import residentEvil.domain.model.service.VirusServiceModel;
 import residentEvil.domain.model.view.CapitalDetailsViewModel;
@@ -59,11 +60,12 @@ public class VirusController extends BaseController {
 
     private void addObjectsInModelAndViewForAdd(ModelAndView modelAndView) {
         modelAndView.addObject("capitals", getAllCapitals());
+        modelAndView.addObject("mutations", Mutation.values());
         // Stupid fix but it works for making generic form.
         modelAndView.addObject("virus", new VirusServiceModel());
     }
     private void addObjectsInModelAndViewForEdit(@PathVariable("id") String id, ModelAndView modelAndView) {
-        modelAndView.addObject("capitals", getAllCapitals());
+        addObjectsInModelAndViewForAdd(modelAndView);
         modelAndView.addObject("virus", getVirusById(id));
     }
     private void addObjectsInModelAndViewForShow(ModelAndView modelAndView) {

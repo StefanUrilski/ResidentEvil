@@ -60,38 +60,18 @@
     </div>
     <br/>
     <!--                  MUTATION               -->
-    <div th:classappend="${#fields.hasErrors('mutation')}? 'text-danger'">
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="mutation" id="inputVirusMutation1"
-                   value="ZOMBIE">
-            <label class="form-check-label" for="inputVirusMutation1">
-                ZOMBIE
+    <div class="form-check">
+        <th:block th:each="mutation, iter : ${mutations}">
+            <input class="form-check-input" type="radio" th:id="${mutation}" th:value="${mutation}"
+                   th:field="*{mutation}">
+            <label class="form-check-label" th:for="${mutation}" th:text="${mutation}"
+                   th:styleappend="${#fields.hasErrors('mutation')} ? 'color: red'">
             </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="mutation" id="inputVirusMutation2"
-                   value="T_078_TYRANT">
-            <label class="form-check-label" for="inputVirusMutation2">
-                T_078_TYRANT
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="mutation" id="inputVirusMutation3"
-                   value="GIANT_SPIDER">
-            <label class="form-check-label" for="inputVirusMutation3">
-                GIANT_SPIDER
-            </label>
-        </div>
-        <div class="form-check disabled">
-            <input class="form-check-input" type="radio" name="mutation" id="inputVirusMutation4"
-                   value="Save Humanity" disabled>
-            <label class="form-check-label" for="inputVirusMutation4">
-                Save Humanity
-            </label>
-        </div>
-        <small class="text-muted font-italic ml-2 edit-virus"
-               th:text="'Previous value: ' + ${virus.mutation}"></small>
-        <small th:each="error : ${#fields.errors('mutation')}" th:text="${error}"></small>
+            <br/>
+        </th:block>
+        <input class="form-check-input" type="radio" value="Save Humanity" disabled>Save Humanity
+        <br/>
+        <small style="color: red" th:each="error : ${#fields.errors('mutation')}" th:text="${error}"></small>
     </div>
     <br/>
     <!--              TURNOVER RATE              -->
