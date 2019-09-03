@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+
+<main>
+    <form th:action="@{/login}">
+        <div class="form-group">
+            <label for="inputUsername">Username: </label>
+            <input type="text" class="form-control" id="inputUsername" placeholder="Enter username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password: </label>
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+        </div>
+        <div class="form-group">
+            <label for="inputConfirmPassword">Confirm Password: </label>
+            <input type="password" class="form-control" id="inputConfirmPassword"
+                   placeholder="Confirm Password" name="confirmPassword">
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email address: </label>
+            <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" name="email">
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="font-weight-light font-italic" for="exampleCheck1">Remember me?</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</main>
+</body>
+</html>

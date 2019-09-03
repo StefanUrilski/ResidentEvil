@@ -75,10 +75,10 @@
         </div>
         <br/>
     </div>
-    <br/>
     <small class="text-muted font-italic ml-2 edit-virus"
            th:text="'Previous value: ' + ${virus.mutation}"></small>
     <small style="color: red" th:each="error : ${#fields.errors('mutation')}" th:text="${error}"></small>
+    <br/>
     <br/>
     <!--              TURNOVER RATE              -->
     <div class="row">
@@ -141,7 +141,7 @@
             <button class="btn bg-primary" id="submitButton">Spread!</button>
         </div>
         <div class="col-3">
-            <a th:href="@{/home}" class="btn bg-danger border-dark">Cancel</a>
+            <a th:href="@{/home}" class="btn bg-danger">Cancel</a>
         </div>
     </div>
 </th:block>

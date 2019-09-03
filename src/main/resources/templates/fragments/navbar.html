@@ -8,6 +8,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <th:block th:if="${principal != null}">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link text-white" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
@@ -23,9 +24,19 @@
                     </div>
                 </li>
             </ul>
+            </th:block>
+            <th:block th:if="${principal == null}">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link text-white" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a class="ml-4 text-white" th:href="@{/register}">Register</a></li>
+                <li><a class="ml-4 text-white" th:href="@{/login}">Login</a></li>
+            </ul>
+            </th:block>
         </div>
-    </nav>
-    </div>
     </nav>
     </header>
 </th:block>
