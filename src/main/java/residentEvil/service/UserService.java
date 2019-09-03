@@ -6,4 +6,6 @@ import residentEvil.domain.model.service.UserServiceModel;
 public interface UserService extends UserDetailsService {
 
     boolean registerUser(UserServiceModel userServiceModel);
+
+
 }

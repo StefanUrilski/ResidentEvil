@@ -1,4 +1,4 @@
-package residentEvil.custumValidaton;
+package residentEvil.common.custumValidaton;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

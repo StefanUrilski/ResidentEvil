@@ -1,42 +1,45 @@
 <th:block th:fragment>
     <header>
-    <nav class="navbar navbar-expand-lg re-background">
-        <a class="navbar-brand text-white" th:href="@{/}">Resident Evil</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <nav class="navbar navbar-expand-lg re-background">
+            <a class="navbar-brand text-white" th:href="@{/}">Resident Evil</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <th:block th:if="${principal != null}">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link text-white" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Viruses
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" th:href="@{/viruses/add}">Add</a>
-                        <a class="dropdown-item" th:href="@{/viruses/show}">Show</a>
-                    </div>
-                </li>
-            </ul>
-            </th:block>
-            <th:block th:if="${principal == null}">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link text-white" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
-                    </li>
-                </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a class="ml-4 text-white" th:href="@{/register}">Register</a></li>
-                <li><a class="ml-4 text-white" th:href="@{/login}">Login</a></li>
-            </ul>
-            </th:block>
-        </div>
-    </nav>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <th:block th:if="${principal != null}">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link text-white" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Viruses
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" th:href="@{/viruses/add}">Add</a>
+                                <a class="dropdown-item" th:href="@{/viruses/show}">Show</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="ml-4 text-white" th:href="@{/logout}">Logout</a></li>
+                    </ul>
+                </th:block>
+                <th:block th:if="${principal == null}">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link text-white" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="ml-4 text-white" th:href="@{/register}">Register</a></li>
+                        <li><a class="ml-4 text-white" th:href="@{/login}">Login</a></li>
+                    </ul>
+                </th:block>
+            </div>
+        </nav>
     </header>
 </th:block>

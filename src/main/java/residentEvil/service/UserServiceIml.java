@@ -13,6 +13,8 @@ import residentEvil.domain.model.service.UserServiceModel;
 import residentEvil.repository.UserRepository;
 import residentEvil.repository.UserRoleRepository;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceIml implements UserService {
 
@@ -93,4 +95,5 @@ public class UserServiceIml implements UserService {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
     }
+
 }

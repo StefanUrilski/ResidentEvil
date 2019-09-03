@@ -1,7 +1,7 @@
 package residentEvil.domain.model.binding;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import residentEvil.custumValidaton.DateBeforeToday;
+import residentEvil.common.custumValidaton.DateBeforeToday;
 import residentEvil.domain.entity.enums.Creator;
 import residentEvil.domain.entity.enums.Magnitude;
 import residentEvil.domain.entity.enums.Mutation;
