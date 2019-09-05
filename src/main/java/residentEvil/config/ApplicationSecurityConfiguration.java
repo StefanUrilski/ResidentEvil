@@ -1,6 +1,5 @@
 package residentEvil.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,9 +24,9 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .mvcMatchers("/css/**", "/js/**").permitAll()
                 .mvcMatchers("/", "/login", "/register").permitAll()
                 .mvcMatchers("/home", "/logout", "/viruses/show")
-                                .hasAnyAuthority("USER", "MODERATOR", "ADMIN", "ROOT")
+                                .hasAnyAuthority("ROLE_USER", "ROLE_MODERATOR", "ROLE_ADMIN", "ROLE_ROOT")
                 .mvcMatchers("/viruses/add", "/viruses/edit", "/viruses/delete")
-                                .hasAnyAuthority("MODERATOR", "ADMIN", "ROOT")
+                                .hasAnyAuthority("ROLE_MODERATOR", "ROLE_ADMIN", "ROLE_ROOT")
         .and()
                 .formLogin()
                 .loginPage("/login")

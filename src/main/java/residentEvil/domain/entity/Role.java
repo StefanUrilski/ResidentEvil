@@ -6,10 +6,17 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user_role")
-public class UserRole extends BaseEntity implements GrantedAuthority {
+@Table(name = "roles")
+public class Role extends BaseEntity implements GrantedAuthority {
 
     private String authority;
+
+    public Role() {
+    }
+
+    public Role(String authority) {
+        this.authority = authority;
+    }
 
     public void setAuthority(String authority) {
         this.authority = authority;

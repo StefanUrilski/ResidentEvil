@@ -18,7 +18,7 @@ public class User extends BaseEntity implements UserDetails {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
-    private Set<UserRole> authorities;
+    private Set<Role> authorities;
 
     public User() {
         this.isAccountNonExpired = true;
@@ -97,16 +97,16 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @Override
-    @ManyToMany(targetEntity = UserRole.class, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_user_role",
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id")
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    public Set<UserRole> getAuthorities() {
+    public Set<Role> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Set<UserRole> authorities) {
+    public void setAuthorities(Set<Role> authorities) {
         this.authorities = authorities;
     }
 }

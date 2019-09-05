@@ -7,78 +7,55 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import residentEvil.common.Constants;
+import residentEvil.domain.entity.Role;
 import residentEvil.domain.entity.User;
-import residentEvil.domain.entity.UserRole;
 import residentEvil.domain.model.service.UserServiceModel;
 import residentEvil.repository.UserRepository;
-import residentEvil.repository.UserRoleRepository;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
 public class UserServiceIml implements UserService {
 
     private final ModelMapper modelMapper;
+    private final RoleService roleService;
     private final BCryptPasswordEncoder encoder;
     private final UserRepository userRepository;
-    private final UserRoleRepository roleRepository;
 
     @Autowired
     public UserServiceIml(ModelMapper modelMapper,
+                          RoleService roleService,
                           BCryptPasswordEncoder encoder,
-                          UserRepository userRepository,
-                          UserRoleRepository roleRepository) {
+                          UserRepository userRepository) {
         this.modelMapper = modelMapper;
+        this.roleService = roleService;
         this.encoder = encoder;
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-    }
-
-    private void seedRoles() {
-        if (roleRepository.count() == 0) {
-            UserRole user = new UserRole();
-            user.setAuthority(Constants.ROLE_USER);
-
-            UserRole moderator = new UserRole();
-            moderator.setAuthority(Constants.ROLE_MODERATOR);
-
-            UserRole admin = new UserRole();
-            admin.setAuthority(Constants.ROLE_ADMIN);
-
-            UserRole root = new UserRole();
-            root.setAuthority(Constants.ROLE_ROOT);
-
-            this.roleRepository.save(root);
-            this.roleRepository.save(admin);
-            this.roleRepository.save(moderator);
-            this.roleRepository.save(user);
-        }
-    }
-
-    private UserRole role() {
-        long count = userRepository.count();
-        UserRole userRole;
-
-        if (count == 0) {
-            userRole = roleRepository.findByAuthority(Constants.ROLE_ROOT);
-        } else if (count == 1) {
-            userRole = roleRepository.findByAuthority(Constants.ROLE_ADMIN);
-        } else if (count == 2) {
-            userRole = roleRepository.findByAuthority(Constants.ROLE_MODERATOR);
-        } else {
-            userRole = roleRepository.findByAuthority(Constants.ROLE_USER);
-        }
-
-        return userRole;
     }
 
     @Override
     public boolean registerUser(UserServiceModel userServiceModel) {
-        seedRoles();
+        roleService.seedRolesInDv();
+
+        Set<Role> roles = new HashSet<>();
+        if (userRepository.count() == 0) {
+            roles = roleService.findAllRoles().stream()
+                    .map(role -> modelMapper.map(role, Role.class))
+                    .collect(Collectors.toSet());
+        } else {
+            roles.add(modelMapper.map(
+                    roleService.findByRoleAuthority(Constants.ROLE_USER),
+                    Role.class
+            ));
+        }
 
         User user = modelMapper.map(userServiceModel, User.class);
 
+        user.setAuthorities(roles);
         user.setPassword(encoder.encode(user.getPassword()));
-        user.getAuthorities().add(role());
 
         try {
             userRepository.save(user);
@@ -91,8 +68,10 @@ public class UserServiceIml implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
+        return userRepository
+                .findByUsername(username)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
     }
 
 }
