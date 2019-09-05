@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import residentEvil.domain.entity.enums.Mutation;
 import residentEvil.domain.model.binding.VirusBindingModel;
+import residentEvil.domain.model.binding.VirusEditBindingModel;
 import residentEvil.domain.model.service.VirusServiceModel;
 import residentEvil.domain.model.view.CapitalDetailsViewModel;
 import residentEvil.domain.model.view.CapitalViewModel;
@@ -65,10 +66,12 @@ public class VirusController extends BaseController {
         // Stupid fix but it works for making generic form.
         modelAndView.addObject("virus", new VirusServiceModel());
     }
+
     private void addObjectsInModelAndViewForEdit(@PathVariable("id") String id, ModelAndView modelAndView) {
         addObjectsInModelAndViewForAdd(modelAndView);
         modelAndView.addObject("virus", getVirusById(id));
     }
+
     private void addObjectsInModelAndViewForShow(ModelAndView modelAndView) {
         modelAndView.addObject("allViruses", getAllViruses());
         modelAndView.addObject("capitalsWithDetails", getAllCapitalsWithDetails());
@@ -96,7 +99,7 @@ public class VirusController extends BaseController {
         }
         virusService.saveVirus(modelMapper.map(bindingModel, VirusServiceModel.class));
 
-        return redirect("/");
+        return redirect("/home");
     }
 
     @GetMapping("/show")
@@ -106,7 +109,6 @@ public class VirusController extends BaseController {
 
         return view("viruses/show-viruses", modelAndView);
     }
-
 
 
     @GetMapping("/edit/{id}")
@@ -123,8 +125,8 @@ public class VirusController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView editConfirm(@PathVariable("id") String id,
                                     ModelAndView modelAndView,
-                                   @Valid @ModelAttribute(name = "bindingModel") VirusBindingModel bindingModel,
-                                   BindingResult bindingResult) {
+                                    @Valid @ModelAttribute(name = "bindingModel") VirusEditBindingModel bindingModel,
+                                    BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             addObjectsInModelAndViewForEdit(id, modelAndView);
@@ -135,7 +137,7 @@ public class VirusController extends BaseController {
         bindingModel.setId(id);
         virusService.editVirus(modelMapper.map(bindingModel, VirusServiceModel.class));
 
-        return redirect("/");
+        return redirect("/home");
     }
 
     @GetMapping("/delete/{id}")
@@ -143,6 +145,6 @@ public class VirusController extends BaseController {
     public ModelAndView deleteConfirm(@PathVariable("id") String id) {
         virusService.removeVirusById(id);
 
-        return redirect("/");
+        return redirect("/home");
     }
 }
