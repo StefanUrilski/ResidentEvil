@@ -2,6 +2,7 @@ package residentEvil.web.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,27 +26,30 @@ public class UserController extends BaseController {
     }
 
     @GetMapping("/register")
+    @PreAuthorize("isAnonymous()")
     public ModelAndView register(ModelAndView modelAndView) {
-        modelAndView.setViewName("register");
+        modelAndView.setViewName("user/register");
 
         return modelAndView;
     }
 
     @PostMapping("/register")
+    @PreAuthorize("isAnonymous()")
     public ModelAndView registerConfirm(ModelAndView modelAndView,
                                  @ModelAttribute(name = "registerModel")UserRegisterBindingModel registerModel) {
-        if (!registerModel.getPassword().equals(registerModel.getConfirmPassword())) { return redirect("/register"); }
+        if (!registerModel.getPassword().equals(registerModel.getConfirmPassword())) { return view("user/register"); }
 
         if (! userService.registerUser(modelMapper.map(registerModel, UserServiceModel.class))) {
-            return view("register");
+            return view("user/register");
         }
 
-        return redirect("/login");
+        return redirect("login");
     }
 
     @GetMapping("/login")
+    @PreAuthorize("isAnonymous()")
     public ModelAndView login(ModelAndView modelAndView) {
-        modelAndView.setViewName("login");
+        modelAndView.setViewName("user/login");
 
         return modelAndView;
     }

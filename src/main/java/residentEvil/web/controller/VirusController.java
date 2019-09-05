@@ -2,6 +2,7 @@ package residentEvil.web.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -74,14 +75,16 @@ public class VirusController extends BaseController {
     }
 
     @GetMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView add(ModelAndView modelAndView,
                             @ModelAttribute(name = "bindingModel") VirusBindingModel bindingModel) {
         addObjectsInModelAndViewForAdd(modelAndView);
 
-        return view("add-viruses", modelAndView);
+        return view("viruses/add-viruses", modelAndView);
     }
 
     @PostMapping("/add")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView addConfirm(ModelAndView modelAndView,
                                    @Valid @ModelAttribute(name = "bindingModel") VirusBindingModel bindingModel,
                                    BindingResult bindingResult) {
@@ -89,7 +92,7 @@ public class VirusController extends BaseController {
         if (bindingResult.hasErrors()) {
             addObjectsInModelAndViewForAdd(modelAndView);
 
-            return view("add-viruses", modelAndView);
+            return view("viruses/add-viruses", modelAndView);
         }
         virusService.saveVirus(modelMapper.map(bindingModel, VirusServiceModel.class));
 
@@ -97,24 +100,27 @@ public class VirusController extends BaseController {
     }
 
     @GetMapping("/show")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView show(ModelAndView modelAndView) {
         addObjectsInModelAndViewForShow(modelAndView);
 
-        return view("show-viruses", modelAndView);
+        return view("viruses/show-viruses", modelAndView);
     }
 
 
 
     @GetMapping("/edit/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView edit(@PathVariable("id") String id,
                              ModelAndView modelAndView,
                              @ModelAttribute(name = "bindingModel") VirusBindingModel bindingModel) {
         addObjectsInModelAndViewForEdit(id, modelAndView);
 
-        return view("edit-viruses", modelAndView);
+        return view("viruses/edit-viruses", modelAndView);
     }
 
     @PostMapping("/edit/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView editConfirm(@PathVariable("id") String id,
                                     ModelAndView modelAndView,
                                    @Valid @ModelAttribute(name = "bindingModel") VirusBindingModel bindingModel,
@@ -123,7 +129,7 @@ public class VirusController extends BaseController {
         if (bindingResult.hasErrors()) {
             addObjectsInModelAndViewForEdit(id, modelAndView);
 
-            return view("edit-viruses", modelAndView);
+            return view("viruses/edit-viruses", modelAndView);
         }
 
         bindingModel.setId(id);
@@ -133,6 +139,7 @@ public class VirusController extends BaseController {
     }
 
     @GetMapping("/delete/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ModelAndView deleteConfirm(@PathVariable("id") String id) {
         virusService.removeVirusById(id);
 

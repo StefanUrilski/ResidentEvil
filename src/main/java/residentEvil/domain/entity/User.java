@@ -21,6 +21,10 @@ public class User extends BaseEntity implements UserDetails {
     private Set<UserRole> authorities;
 
     public User() {
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
         this.authorities = new HashSet<>();
     }
 

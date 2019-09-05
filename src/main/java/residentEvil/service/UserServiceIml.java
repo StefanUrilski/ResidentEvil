@@ -13,7 +13,6 @@ import residentEvil.domain.model.service.UserServiceModel;
 import residentEvil.repository.UserRepository;
 import residentEvil.repository.UserRoleRepository;
 
-import java.util.Optional;
 
 @Service
 public class UserServiceIml implements UserService {
@@ -56,7 +55,7 @@ public class UserServiceIml implements UserService {
     }
 
     private UserRole role() {
-        long count = roleRepository.count();
+        long count = userRepository.count();
         UserRole userRole;
 
         if (count == 0) {
