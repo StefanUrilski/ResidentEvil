@@ -79,7 +79,16 @@ public class UserServiceIml implements UserService {
     @Override
     public List<UserViewServiceModel> findAllUsers() {
         return userRepository.findAll().stream()
-                .map(user -> modelMapper.map(user, UserViewServiceModel.class))
+                .map(user -> {
+                    UserViewServiceModel userModel = modelMapper.map(user, UserViewServiceModel.class);
+
+                    Set<String> roles = user.getAuthorities().stream()
+                            .map(Role::getAuthority)
+                            .collect(Collectors.toSet());
+
+                    userModel.setAuthorities(roles);
+                    return userModel;
+                })
                 .collect(Collectors.toList());
     }
 }
