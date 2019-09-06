@@ -10,9 +10,11 @@ import residentEvil.common.Constants;
 import residentEvil.domain.entity.Role;
 import residentEvil.domain.entity.User;
 import residentEvil.domain.model.service.UserServiceModel;
+import residentEvil.domain.model.service.UserViewServiceModel;
 import residentEvil.repository.UserRepository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -74,4 +76,10 @@ public class UserServiceIml implements UserService {
                         new UsernameNotFoundException(Constants.USERNAME_NOT_FOUND));
     }
 
+    @Override
+    public List<UserViewServiceModel> findAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> modelMapper.map(user, UserViewServiceModel.class))
+                .collect(Collectors.toList());
+    }
 }

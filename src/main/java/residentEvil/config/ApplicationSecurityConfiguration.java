@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
+import static residentEvil.common.Constants.*;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -24,9 +26,10 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .mvcMatchers("/css/**", "/js/**").permitAll()
                 .mvcMatchers("/", "/login", "/register").permitAll()
                 .mvcMatchers("/home", "/logout", "/viruses/show")
-                                .hasAnyAuthority("ROLE_USER", "ROLE_MODERATOR", "ROLE_ADMIN", "ROLE_ROOT")
+                                .hasAnyAuthority(ROLE_USER, ROLE_MODERATOR, ROLE_ADMIN, ROLE_ROOT)
                 .mvcMatchers("/viruses/add", "/viruses/edit", "/viruses/delete")
-                                .hasAnyAuthority("ROLE_MODERATOR", "ROLE_ADMIN", "ROLE_ROOT")
+                                .hasAnyAuthority(ROLE_MODERATOR, ROLE_ADMIN, ROLE_ROOT)
+                .mvcMatchers("/users/all").hasAnyAuthority(ROLE_ADMIN, ROLE_ROOT)
         .and()
                 .formLogin()
                 .loginPage("/login")

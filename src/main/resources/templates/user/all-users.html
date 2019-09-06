@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+<body>
+<header>
+    <th:block th:include="~{fragments/navbar}"/>
+</header>
+<main>
+    <div class="container mt-5">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Authorities</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="user : ${users}">
+                <tr>
+                    <th scope="row" th:text="${user.id}"></th>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.getEmail()}"></td>
+                    <td class="font-italic font-weight-light"
+                        th:text="${#strings.replace(#strings.listJoin(user.authorities, ', '), 'ROLE_', '')}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

@@ -9,8 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import residentEvil.domain.model.binding.UserRegisterBindingModel;
+import residentEvil.domain.model.service.RoleServiceModel;
 import residentEvil.domain.model.service.UserServiceModel;
+import residentEvil.domain.model.view.UserDetailsViewModel;
 import residentEvil.service.UserService;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class UserController extends BaseController {
@@ -23,6 +29,21 @@ public class UserController extends BaseController {
                           UserService userService) {
         this.modelMapper = modelMapper;
         this.userService = userService;
+    }
+
+    private List<UserDetailsViewModel> gettingAllUsersInfo() {
+        return userService.findAllUsers().stream()
+                .map(user -> {
+                    UserDetailsViewModel userModel = modelMapper.map(user, UserDetailsViewModel.class);
+
+                    Set<String> roles = user.getAuthorities().stream()
+                            .map(RoleServiceModel::getAuthority)
+                            .collect(Collectors.toSet());
+
+                    userModel.setAuthorities(roles);
+                    return userModel;
+                })
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/register")
@@ -53,5 +74,15 @@ public class UserController extends BaseController {
 
         return modelAndView;
     }
+
+    @GetMapping("/users/all")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ModelAndView allUsers(ModelAndView modelAndView) {
+        modelAndView.addObject("users", gettingAllUsersInfo());
+
+        return view("user/all-users", modelAndView);
+    }
+
+
 
 }
