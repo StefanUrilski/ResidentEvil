@@ -25,7 +25,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void seedRolesInDv() {
+    public void seedRolesInDb() {
         if (roleRepository.count() == 0) {
             roleRepository.saveAndFlush(new Role(Constants.ROLE_USER));
             roleRepository.saveAndFlush(new Role(Constants.ROLE_MODERATOR));

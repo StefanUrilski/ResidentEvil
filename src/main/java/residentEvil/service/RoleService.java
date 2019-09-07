@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface RoleService {
 
-    void seedRolesInDv();
+    void seedRolesInDb();
 
     Set<RoleServiceModel> findAllRoles();
 

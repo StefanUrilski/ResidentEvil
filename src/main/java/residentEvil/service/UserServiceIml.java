@@ -40,7 +40,7 @@ public class UserServiceIml implements UserService {
 
     @Override
     public boolean registerUser(UserServiceModel userServiceModel) {
-        roleService.seedRolesInDv();
+        roleService.seedRolesInDb();
 
         Set<Role> roles = new HashSet<>();
         if (userRepository.count() == 0) {
